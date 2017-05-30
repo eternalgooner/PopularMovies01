@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 
  * class that starts the application
  * - has inner class TheMovieDbTask
  *
