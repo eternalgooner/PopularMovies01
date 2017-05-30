@@ -2,7 +2,6 @@ package david.com.popularmovies;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -43,14 +42,8 @@ public class NetworkUtils {
     }
 
     private static String getKey() {
-        Scanner scanner = new Scanner(context.getResources().openRawResource(R.raw.api_key));
-        String result = "";
-
-        while (scanner.hasNext()){
-            result = scanner.next();
-        }
-        scanner.close();
-        return result;
+        String apiKey = BuildConfig.MY_MOVIEDB_API_KEY;
+        return apiKey;
     }
 
     public static URL buildUrl(String sortType, Context context){

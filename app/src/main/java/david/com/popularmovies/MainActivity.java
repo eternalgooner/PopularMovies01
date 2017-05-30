@@ -2,11 +2,10 @@ package david.com.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,20 +15,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * 
+ *
  * class that starts the application
  * - has inner class TheMovieDbTask
  *
@@ -53,7 +49,7 @@ import java.util.Map;
  * - some code was implemented with help from Udacity Android course
  *
  * INFO:
- * you need to supply your own API key to retrieve data from themoviedb (API key is used in NetworkUtils class - API key is stored in res/raw as txt file)
+ * you need to supply your own API key to retrieve data from themoviedb (API key is used in NetworkUtils class)
  */
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener{
@@ -68,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private GridLayoutManager gridLayoutManager;
     private boolean showingMostPopular = true;
     private Bundle movieBundle = new Bundle();
-    private Bundle bundleRecyclerViewState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,25 +71,20 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_moviePosters);
-        gridLayoutManager = new GridLayoutManager(this, 3);
+
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            gridLayoutManager = new GridLayoutManager(this, 3);
+        }else{
+            gridLayoutManager = new GridLayoutManager(this, 4);
+        }
         mRecyclerView.setLayoutManager(gridLayoutManager);
         txtNoNetworkMessage = (TextView) findViewById(R.id.message_no_network_connection);
 
-        //loadMovieList("mostPopular"); //TODO hide no network message when network comes back - BUG
-//
-//        if(savedInstanceState != null){
-//            //bundleRecyclerViewState = savedInstanceState;
-//            //mRecyclerView = savedInstanceState.getParcelable("test save");
-//            Parcelable listState = savedInstanceState.getParcelable("rvState");
-//            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
-//        }
-
         if(isNetworkAvailable()){
-            loadMovieList("mostPopular"); //TODO hide no network message when network comes back - BUG
+            loadMovieList("mostPopular");
         }else{
             txtNoNetworkMessage.setVisibility(View.VISIBLE);
         }
-
         Log.d(TAG, "exiting onCreate");
     }
 
@@ -105,50 +95,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         Log.d(TAG, "exiting isNetworkAvailable");
         return ((activeNetworkInfo != null) && (activeNetworkInfo.isConnected()));
     }
-
-
-    //TODO implement onSaveStateInstace & onRestoreStateInstance
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        bundleRecyclerViewState = new Bundle();
-//        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
-//        bundleRecyclerViewState.putParcelable("recyclerState", listState);
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-////        if(bundleRecyclerViewState != null){
-////            //bundleRecyclerViewState = bundleRecyclerViewState.getParcelable("recyclerState");
-////            mRecyclerView.getLayoutManager().onRestoreInstanceState(bundleRecyclerViewState);
-////        }
-//    }
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
-//        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
-//        bundleRecyclerViewState.putParcelable("recyclerState", listState);
-//        outState.putParcelable("test save", bundleRecyclerViewState);
-//    }
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
-//        outState.putParcelable("rvState", listState);
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        if(savedInstanceState != null){
-//            Parcelable rvState = savedInstanceState.getParcelable("rvState");
-//            Parcelable listState = savedInstanceState.getParcelable("rvState");
-//            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
-//        }
-//    }
 
     private void showMovies(){
         Log.d(TAG, "entering showMovies");
@@ -250,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                     JSONObject nextMovie = JsonUtils.getJSONObject(jsonMoviesArray, next);
                     posterPaths[next] = JsonUtils.getString(nextMovie, "poster_path");
                     Log.d(TAG, posterPaths[next]);
-                    posterPaths[next] = "https://image.tmdb.org/t/p/w780/" + posterPaths[next];     //other poster sizes are w92, w154, w185, w342, w500, w780 or original
+                    posterPaths[next] = "https://image.tmdb.org/t/p/w500/" + posterPaths[next];     //other poster sizes are w92, w154, w185, w342, w500, w780 or original
                     getAllMovieData(nextMovie);
                     ++next;
                 }

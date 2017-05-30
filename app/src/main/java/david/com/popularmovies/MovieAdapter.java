@@ -31,7 +31,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private int mNumItems;
     private static final String TAG = MovieAdapter.class.getSimpleName();
     private final ListItemClickListener onClickListener;
-
     private String[] mPosterPaths;
 
     public MovieAdapter(String[] posterPaths, int numItems, ListItemClickListener clickListener){
@@ -57,15 +56,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
         Log.d(TAG, "entering onBindViewHolder");
         Log.d(TAG, mPosterPaths[position]);
-        int width = context.getResources().getDisplayMetrics().widthPixels;
-        Picasso.with(context).load(mPosterPaths[position]).resize(width/2, 0).into(holder.mImageView);
+        //int width = context.getResources().getDisplayMetrics().widthPixels;
+        Picasso.with(context).load(mPosterPaths[position]).into(holder.mImageView);
         Log.d(TAG, "exiting onBindViewHolder");
     }
 
     @Override
     public int getItemCount() {
         Log.d(TAG, "entering getItemCount. itemCount is: " + mPosterPaths.length);
-        return mPosterPaths.length;
+        return mNumItems;
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
