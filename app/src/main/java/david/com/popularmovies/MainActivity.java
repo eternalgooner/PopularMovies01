@@ -51,7 +51,7 @@ import java.util.HashMap;
  * INFO:
  * you need to supply your own API key to retrieve data from themoviedb (API key is used in NetworkUtils class)
  */
-
+//TODO Test comment
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
