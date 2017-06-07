@@ -14,6 +14,7 @@
     <string name="url_poster_prefix">http://image.tmdb.org/t/p/w500/</string>
     <string name="base_url_top_rated">https://api.themoviedb.org/3/movie/top_rated?api_key=</string>
     <string name="base_url_popular">https://api.themoviedb.org/3/movie/popular?api_key=</string>
+    <!-- TODO SUGGESTION use translatable="false" for strings not requiring translation -->
 
     <!-- Activity titles -->
     <string name="title_movie_details">Movie Details</string>

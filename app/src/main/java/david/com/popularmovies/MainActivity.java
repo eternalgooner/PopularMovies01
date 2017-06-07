@@ -51,7 +51,7 @@ import java.util.HashMap;
  * INFO:
  * you need to supply your own API key to retrieve data from themoviedb (API key is used in NetworkUtils class)
  */
-
+//TODO Test comment
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListItemClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             gridLayoutManager = new GridLayoutManager(this, 3);
+            //TODO SUGGESTION Numeric literals would be better as defined constants, and can help reduce errors and maintenance
         }else{
             gridLayoutManager = new GridLayoutManager(this, 4);
         }
@@ -82,8 +83,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
         if(isNetworkAvailable()){
             loadMovieList("mostPopular");
+            //TODO ~~REQUIREMENT~~ This is one example of many inappropriate uses of string literals, move to strings.xml or set as a constant.
         }else{
             txtNoNetworkMessage.setVisibility(View.VISIBLE);
+            //TODO AWESOME Informing the user of appropriate issues is good UX.
         }
         Log.d(TAG, "exiting onCreate");
     }
@@ -173,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
             String theMovieDbResult = null;
             try {
                 theMovieDbResult = NetworkUtils.getResponseFromHttpUrl(requestPopularMoviesUrl);
+                //TODO AWESOME You're executing network tasks on a background thread. AsyncTaskLoader is even better for the reasons discussed in class.
                 Log.d(TAG, "exiting doInBackground");
                 return theMovieDbResult;
             } catch (IOException e) {
@@ -193,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                 String[] moviesResult = new String[jsonMoviesArray.length()];
                 int next = 0;
                 for(String movie : moviesResult){
+                    //TODO SUGGESTION A most unusual usage of the moviesResult String array - it effectively just acts as an int!
                     JSONObject nextMovie = JsonUtils.getJSONObject(jsonMoviesArray, next);
                     posterPaths[next] = JsonUtils.getString(nextMovie, "poster_path");
                     Log.d(TAG, posterPaths[next]);
@@ -200,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                     getAllMovieData(nextMovie);
                     ++next;
                 }
+                //TODO SUGGESTION You could do the JSON parsing on the background thread too, and save the UI thread some work!
+
                 showMovies();
                 Log.d(TAG, "exiting onPostExecute");
             } else {
@@ -210,6 +217,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         private void getAllMovieData(JSONObject clickedMovie) {
             Log.d(TAG, "entering getAllMovieData");
             HashMap movieMap = new HashMap();
+            //TODO AWESOME Good to see usage of the Collections Framework, although I'm not sure HashMap is necessarily the most efficient collection in this case.
+            //TODO SUGGESTION Perhaps a class named Movie would be more appropriate e.g. ArrayList<Movie> and Movie could implement Parcelable etc.
             movieMap.put("title", JsonUtils.getString(clickedMovie, "original_title"));
             movieMap.put("overview", JsonUtils.getString(clickedMovie, "overview"));
             movieMap.put("releaseDate", JsonUtils.getString(clickedMovie, "release_date"));
