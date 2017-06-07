@@ -10,5 +10,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/item_imageView"
         android:adjustViewBounds="true"/>
+    <!-- TODO SUGGESTION include contentDescription property for Accessibility-->
 
 </FrameLayout>

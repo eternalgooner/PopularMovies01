@@ -32,6 +32,7 @@ public class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static Context context;
+    //TODO SUGGESTION Ouch, context ref in a static field is a memory leak and breaks InstantRun (likely causing your app to crash the emulator)
     private static String base_url_popular;
     private static String base_url_top_rated;
 
@@ -39,6 +40,7 @@ public class NetworkUtils {
         String apiKey = getKey();
         base_url_popular = context.getString(R.string.base_url_popular) + apiKey;
         base_url_top_rated = context.getString(R.string.base_url_top_rated) + apiKey;
+        //TODO EXCELLENT Using strings.xml and string constants has advantages as mentioned in other review comments
     }
 
     private static String getKey() {
@@ -59,6 +61,7 @@ public class NetworkUtils {
 
         Uri theMovieDbUri = Uri.parse(sortParam).buildUpon().build();
         URL theMoveDbUrl = null;
+        //TODO SUGGESTION Try to avoid using ambiguous and potentially confusing identifier names: theMovieDbUri theMoveDbUrl
 
         try {
             theMoveDbUrl = new URL(theMovieDbUri.toString());
