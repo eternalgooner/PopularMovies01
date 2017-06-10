@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private GridLayoutManager gridLayoutManager;
     private boolean showingMostPopular = true;
     private Bundle movieBundle = new Bundle();
+    private final int PORTRAIT_LAYOUT = 3;
+    private final int LANDSCAPE_LAYOUT = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +75,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_moviePosters);
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            gridLayoutManager = new GridLayoutManager(this, 3);
+            gridLayoutManager = new GridLayoutManager(this, PORTRAIT_LAYOUT);
         }else{
-            gridLayoutManager = new GridLayoutManager(this, 4);
+            gridLayoutManager = new GridLayoutManager(this, LANDSCAPE_LAYOUT);
         }
         mRecyclerView.setLayoutManager(gridLayoutManager);
         txtNoNetworkMessage = (TextView) findViewById(R.id.message_no_network_connection);
 
         if(isNetworkAvailable()){
-            loadMovieList("mostPopular");
+            loadMovieList(getString(R.string.sort_most_popular));
         }else{
             txtNoNetworkMessage.setVisibility(View.VISIBLE);
         }

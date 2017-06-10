@@ -57,7 +57,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         moviePoster = (ImageView) findViewById(R.id.imgMoviePoster);
 
         Bundle bundle = this.getIntent().getExtras();
-        movieSelected = (HashMap) bundle.getSerializable("selectedMovie");
+        movieSelected = (HashMap) bundle.getSerializable(getString(R.string.key_selectedMovie));
 
         displayMovieDetails(movieSelected);
         Log.d(TAG, "exiting onCreate");
@@ -65,15 +65,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void displayMovieDetails(HashMap movie) {
         Log.d(TAG, "entering displayMovieDetails");
-        StringBuilder movieYear = new StringBuilder((String) movie.get("releaseDate"));
+        StringBuilder movieYear = new StringBuilder((String) movie.get(getString(R.string.key_releaseDate)));
         String year = movieYear.substring(0,4);
         String posterPrefix = getString(R.string.url_poster_prefix);
-        movieTitle.setText((String)movie.get("title"));
-        moveSummary.setText((String)movie.get("overview"));
-        userRating.setText((String)movie.get("voteAverage") + "/10");
+        movieTitle.setText((String)movie.get(getString(R.string.key_title)));
+        moveSummary.setText((String)movie.get(getString(R.string.key_overview)));
+        userRating.setText((String)movie.get(getString(R.string.key_voteAverage)) + getString(R.string.user_rating_out_of_ten));
         releaseDate.setText(year);
-        Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get("posterPath")).into(moviePoster);
-        Log.d(TAG, "poster path is: " + movie.get("posterPath"));
+        Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get(getString(R.string.key_posterPath))).into(moviePoster);
+        Log.d(TAG, "poster path is: " + movie.get(getString(R.string.key_posterPath)));
     }
 
     @Override

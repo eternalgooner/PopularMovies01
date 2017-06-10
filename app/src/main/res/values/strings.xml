@@ -11,13 +11,27 @@
     <string name="message_no_network">please check your network connection and try again</string>
 
     <!-- network request strings -->
-    <string name="url_poster_prefix">http://image.tmdb.org/t/p/w500/</string>
-    <string name="base_url_top_rated">https://api.themoviedb.org/3/movie/top_rated?api_key=</string>
-    <string name="base_url_popular">https://api.themoviedb.org/3/movie/popular?api_key=</string>
+    <string name="url_poster_prefix" translatable="false">http://image.tmdb.org/t/p/w500/</string>
+    <string name="base_url_top_rated" translatable="false">https://api.themoviedb.org/3/movie/top_rated?api_key=</string>
+    <string name="base_url_popular" translatable="false">https://api.themoviedb.org/3/movie/popular?api_key=</string>
 
     <!-- Activity titles -->
     <string name="title_movie_details">Movie Details</string>
     <string name="app_name">Popular Movies</string>
+    <string name="sort_most_popular">mostPopular</string>
 
+    <!-- keys for hashmaps -->
+    <string name="key_selectedMovie">selectedMovie</string>
+    <string name="key_releaseDate">releaseDate</string>
+    <string name="key_title">title</string>
+    <string name="key_overview">overview</string>
+    <string name="key_voteAverage">voteAverage</string>
+    <string name="key_posterPath">posterPath</string>
+    <string name="key_mostPopular">mostPopular</string>
+    <string name="key_highestRated">highestRated</string>
 
+    <string name="user_rating_out_of_ten">/10</string>
+
+    <string name="thumbnail_image_from_movie">thumbnail image from movie</string>
+    
 </resources>
