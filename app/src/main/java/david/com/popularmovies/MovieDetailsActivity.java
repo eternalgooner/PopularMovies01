@@ -1,5 +1,5 @@
 package david.com.popularmovies;
-
+//TODO SUGGESTION Use reverse domain-name notation e.g. com.eternalgoonerdavid.popularmovies per Java guidelines
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -57,7 +57,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         moviePoster = (ImageView) findViewById(R.id.imgMoviePoster);
 
         Bundle bundle = this.getIntent().getExtras();
+
         movieSelected = (HashMap) bundle.getSerializable(getString(R.string.key_selectedMovie));
+        //TODO SUGGESTION String literals used as keys would be better as defined constants or in strings.xml, and can help reduce errors and maintenance
 
         displayMovieDetails(movieSelected);
         Log.d(TAG, "exiting onCreate");
@@ -68,12 +70,22 @@ public class MovieDetailsActivity extends AppCompatActivity {
         StringBuilder movieYear = new StringBuilder((String) movie.get(getString(R.string.key_releaseDate)));
         String year = movieYear.substring(0,4);
         String posterPrefix = getString(R.string.url_poster_prefix);
+
         movieTitle.setText((String)movie.get(getString(R.string.key_title)));
         moveSummary.setText((String)movie.get(getString(R.string.key_overview)));
         userRating.setText((String)movie.get(getString(R.string.key_voteAverage)) + getString(R.string.user_rating_out_of_ten));
         releaseDate.setText(year);
         Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get(getString(R.string.key_posterPath))).into(moviePoster);
         Log.d(TAG, "poster path is: " + movie.get(getString(R.string.key_posterPath)));
+
+        //TODO ~~REQUIREMENT~~ "/10" string literal - consider strings.xml
+        releaseDate.setText(year);
+        Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get("posterPath")).into(moviePoster);
+        //TODO SUGGESTION Your app does a decent job of maintaining state when connectivity is lost,
+        //TODO   but it does not display the poster image unless it has already been retrieved.
+        //TODO Consider displaying a generic image when the movie poster is unavailable - rather than blank screen.
+
+        //TODO AWESOME Picasso uses a background thread by default to download images.
     }
 
     @Override
