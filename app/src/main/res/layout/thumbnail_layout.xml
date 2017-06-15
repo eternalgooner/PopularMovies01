@@ -9,6 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_imageView"
+
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/thumbnail_image_from_movie"/>
+
         android:adjustViewBounds="true"/>
     <!-- TODO SUGGESTION include contentDescription property for Accessibility-->
 

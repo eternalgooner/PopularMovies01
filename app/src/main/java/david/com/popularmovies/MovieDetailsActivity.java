@@ -57,7 +57,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         moviePoster = (ImageView) findViewById(R.id.imgMoviePoster);
 
         Bundle bundle = this.getIntent().getExtras();
-        movieSelected = (HashMap) bundle.getSerializable("selectedMovie");
+
+        movieSelected = (HashMap) bundle.getSerializable(getString(R.string.key_selectedMovie));
         //TODO SUGGESTION String literals used as keys would be better as defined constants or in strings.xml, and can help reduce errors and maintenance
 
         displayMovieDetails(movieSelected);
@@ -66,12 +67,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void displayMovieDetails(HashMap movie) {
         Log.d(TAG, "entering displayMovieDetails");
-        StringBuilder movieYear = new StringBuilder((String) movie.get("releaseDate"));
+        StringBuilder movieYear = new StringBuilder((String) movie.get(getString(R.string.key_releaseDate)));
         String year = movieYear.substring(0,4);
         String posterPrefix = getString(R.string.url_poster_prefix);
-        movieTitle.setText((String)movie.get("title"));
-        moveSummary.setText((String)movie.get("overview"));
-        userRating.setText((String)movie.get("voteAverage") + "/10");
+
+        movieTitle.setText((String)movie.get(getString(R.string.key_title)));
+        moveSummary.setText((String)movie.get(getString(R.string.key_overview)));
+        userRating.setText((String)movie.get(getString(R.string.key_voteAverage)) + getString(R.string.user_rating_out_of_ten));
+        releaseDate.setText(year);
+        Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get(getString(R.string.key_posterPath))).into(moviePoster);
+        Log.d(TAG, "poster path is: " + movie.get(getString(R.string.key_posterPath)));
+
         //TODO ~~REQUIREMENT~~ "/10" string literal - consider strings.xml
         releaseDate.setText(year);
         Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get("posterPath")).into(moviePoster);
@@ -80,7 +86,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         //TODO Consider displaying a generic image when the movie poster is unavailable - rather than blank screen.
 
         //TODO AWESOME Picasso uses a background thread by default to download images.
-        Log.d(TAG, "poster path is: " + movie.get("posterPath"));
     }
 
     @Override

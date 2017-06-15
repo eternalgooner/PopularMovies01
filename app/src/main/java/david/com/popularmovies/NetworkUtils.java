@@ -53,9 +53,9 @@ public class NetworkUtils {
         initData();
         String sortParam = "";
 
-        if(sortType.equals("mostPopular")){
+        if(sortType.equals(context.getString(R.string.key_mostPopular))){
             sortParam = base_url_popular;
-        }else if(sortType.equals("highestRated")){
+        }else if(sortType.equals(context.getString(R.string.key_highestRated))){
             sortParam = base_url_top_rated;
         }
 

@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     private GridLayoutManager gridLayoutManager;
     private boolean showingMostPopular = true;
     private Bundle movieBundle = new Bundle();
+    private final int PORTRAIT_LAYOUT = 3;
+    private final int LANDSCAPE_LAYOUT = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +75,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_moviePosters);
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            gridLayoutManager = new GridLayoutManager(this, 3);
+            gridLayoutManager = new GridLayoutManager(this, PORTRAIT_LAYOUT);
             //TODO SUGGESTION Numeric literals would be better as defined constants, and can help reduce errors and maintenance
         }else{
-            gridLayoutManager = new GridLayoutManager(this, 4);
+            gridLayoutManager = new GridLayoutManager(this, LANDSCAPE_LAYOUT);
         }
         mRecyclerView.setLayoutManager(gridLayoutManager);
         txtNoNetworkMessage = (TextView) findViewById(R.id.message_no_network_connection);
 
         if(isNetworkAvailable()){
-            loadMovieList("mostPopular");
+            loadMovieList(getString(R.string.sort_most_popular));
             //TODO ~~REQUIREMENT~~ This is one example of many inappropriate uses of string literals, move to strings.xml or set as a constant.
         }else{
             txtNoNetworkMessage.setVisibility(View.VISIBLE);
