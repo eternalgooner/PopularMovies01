@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     private void showMovies(){
         Log.d(TAG, "entering showMovies");
-        //mRecyclerView = (RecyclerView) findViewById(R.id.rv_moviePosters);
-        //gridLayoutManager = new GridLayoutManager(this, 3);
-        //mRecyclerView.setLayoutManager(gridLayoutManager);
         mMovieAdapter = new MovieAdapter(posterPaths, NUM_LIST_ITEMS, this);
         mRecyclerView.setAdapter(mMovieAdapter);
         Log.d(TAG, "exiting showMovies");
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     public void onListItemClick(int clickedItem) {
         Log.d(TAG, "entering onListItemClick");
         Intent intent = new Intent(MainActivity.this, MovieDetailsActivity.class);
-        movieBundle.putSerializable("selectedMovie", movieList.get(clickedItem));
+        movieBundle.putSerializable(getString(R.string.selectMovie), movieList.get(clickedItem));
         intent.putExtras(movieBundle);
         MainActivity.this.startActivity(intent);
         Log.d(TAG, "exiting onListItemClick");
@@ -155,12 +152,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     private void showHighestRated() {
         showingMostPopular = false;
-        loadMovieList("highestRated");
+        loadMovieList(getString(R.string.highestRated));
     }
 
     private void showMostPopular() {
         showingMostPopular = true;
-        loadMovieList("mostPopular");
+        loadMovieList(getString(R.string.mostPopular));
     }
 
     public class TheMovieDbTask extends AsyncTask<URL, Void, String> {
@@ -195,15 +192,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
             if (theMovieDbSearchResults != null && !theMovieDbSearchResults.equals("")) {
                 Log.d(TAG, theMovieDbSearchResults);
                 JSONObject jsonObject = JsonUtils.getJSONObject(theMovieDbSearchResults);
-                JSONArray jsonMoviesArray = JsonUtils.getJSONArray(jsonObject, "results");
+                JSONArray jsonMoviesArray = JsonUtils.getJSONArray(jsonObject, getString(R.string.results));
                 String[] moviesResult = new String[jsonMoviesArray.length()];
                 int next = 0;
                 for(String movie : moviesResult){
                     //TODO SUGGESTION A most unusual usage of the moviesResult String array - it effectively just acts as an int!
                     JSONObject nextMovie = JsonUtils.getJSONObject(jsonMoviesArray, next);
-                    posterPaths[next] = JsonUtils.getString(nextMovie, "poster_path");
+                    posterPaths[next] = JsonUtils.getString(nextMovie, getString(R.string.poster_path));
                     Log.d(TAG, posterPaths[next]);
-                    posterPaths[next] = "https://image.tmdb.org/t/p/w500/" + posterPaths[next];     //other poster sizes are w92, w154, w185, w342, w500, w780 or original
+                    posterPaths[next] = getString(R.string.tmdb_url_w500) + posterPaths[next];     //other poster sizes are w92, w154, w185, w342, w500, w780 or original
                     getAllMovieData(nextMovie);
                     ++next;
                 }
@@ -221,11 +218,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
             HashMap movieMap = new HashMap();
             //TODO AWESOME Good to see usage of the Collections Framework, although I'm not sure HashMap is necessarily the most efficient collection in this case.
             //TODO SUGGESTION Perhaps a class named Movie would be more appropriate e.g. ArrayList<Movie> and Movie could implement Parcelable etc.
-            movieMap.put("title", JsonUtils.getString(clickedMovie, "original_title"));
-            movieMap.put("overview", JsonUtils.getString(clickedMovie, "overview"));
-            movieMap.put("releaseDate", JsonUtils.getString(clickedMovie, "release_date"));
-            movieMap.put("posterPath", JsonUtils.getString(clickedMovie, "poster_path"));
-            movieMap.put("voteAverage", JsonUtils.getString(clickedMovie, "vote_average"));
+            movieMap.put(getString(R.string.title), JsonUtils.getString(clickedMovie, getString(R.string.original_title)));
+            movieMap.put(getString(R.string.overview), JsonUtils.getString(clickedMovie, getString(R.string.overview)));
+            movieMap.put(getString(R.string.releaseDate), JsonUtils.getString(clickedMovie, getString(R.string.release_date)));
+            movieMap.put(getString(R.string.posterPath), JsonUtils.getString(clickedMovie, getString(R.string.poster_path)));
+            movieMap.put(getString(R.string.voteAverage), JsonUtils.getString(clickedMovie, getString(R.string.vote_average)));
             movieList.add(movieMap);
             Log.d(TAG, "exiting getAllMovieData");
         }

@@ -56,7 +56,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
         Log.d(TAG, "entering onBindViewHolder");
         Log.d(TAG, mPosterPaths[position]);
-        //int width = context.getResources().getDisplayMetrics().widthPixels;
         Picasso.with(context).load(mPosterPaths[position]).into(holder.mImageView);
         Log.d(TAG, "exiting onBindViewHolder");
     }
