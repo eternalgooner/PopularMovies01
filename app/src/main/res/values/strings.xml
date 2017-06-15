@@ -16,9 +16,7 @@
     <string name="base_url_top_rated" translatable="false">https://api.themoviedb.org/3/movie/top_rated?api_key=</string>
     <string name="base_url_popular" translatable="false">https://api.themoviedb.org/3/movie/popular?api_key=</string>
     <!-- TODO-2 REQUIREMENT The Gradle build fails because these 3 strings are declared twice. Did you re-test your app thoroughly after making changes?-->
-    <string name="url_poster_prefix">http://image.tmdb.org/t/p/w500/</string>
-    <string name="base_url_top_rated">https://api.themoviedb.org/3/movie/top_rated?api_key=</string>
-    <string name="base_url_popular">https://api.themoviedb.org/3/movie/popular?api_key=</string>
+
     <!-- TODO SUGGESTION use translatable="false" for strings not requiring translation -->
 
     <!-- Activity titles -->
@@ -39,5 +37,6 @@
     <string name="user_rating_out_of_ten">/10</string>
 
     <string name="thumbnail_image_from_movie">thumbnail image from movie</string>
-    
+    <string name="scanner_delimiter_slash_slash_A">\\A</string>
+
 </resources>

@@ -77,7 +77,7 @@ public class NetworkUtils {
         try {
             InputStream in = urlConnection.getInputStream();
             Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
+            scanner.useDelimiter(context.getString(R.string.scanner_delimiter_slash_slash_A));
             //TODO-2 REQUIREMENT String literals belong strings.xml or declared as constants.
             boolean hasInput = scanner.hasNext();
 
