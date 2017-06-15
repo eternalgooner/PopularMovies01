@@ -78,6 +78,7 @@ public class NetworkUtils {
             InputStream in = urlConnection.getInputStream();
             Scanner scanner = new Scanner(in);
             scanner.useDelimiter("\\A");
+            //TODO-2 REQUIREMENT String literals belong strings.xml or declared as constants.
             boolean hasInput = scanner.hasNext();
 
             if(hasInput){
