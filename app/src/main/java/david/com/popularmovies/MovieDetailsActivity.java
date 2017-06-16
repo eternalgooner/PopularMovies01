@@ -80,7 +80,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         //TODO ~~REQUIREMENT~~ "/10" string literal - consider strings.xml
         releaseDate.setText(year);
-        Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get("posterPath")).into(moviePoster);
+        Picasso.with(getApplicationContext()).load(posterPrefix + (String) movie.get(getString(R.string.posterPath))).into(moviePoster);
         //TODO SUGGESTION Your app does a decent job of maintaining state when connectivity is lost,
         //TODO   but it does not display the poster image unless it has already been retrieved.
         //TODO Consider displaying a generic image when the movie poster is unavailable - rather than blank screen.
